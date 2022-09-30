@@ -109,8 +109,11 @@ const CodeNotebook = () => {
 
           <div className="mt-2 flex items-center space-x-1 text-sm">
             <span className="text-gray-500">Reference:</span>
-            <a href="https://facebook.com" className="text-violet-500">
-              https://facebook.com
+            <a
+              href={`https://github.com${fileUrl}`}
+              className="text-violet-500"
+            >
+              https://github.com{fileUrl}
             </a>
           </div>
         </div>

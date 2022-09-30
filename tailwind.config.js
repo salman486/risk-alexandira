@@ -1,4 +1,7 @@
 const plugin = require('tailwindcss/plugin');
+const defaultTheme = require('tailwindcss/defaultTheme');
+
+const fontName = 'Roboto';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -14,7 +17,11 @@ module.exports = {
         '2xl': '10rem',
       },
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: [fontName, ...defaultTheme.fontFamily.sans],
+      },
+    },
   },
   plugins: [
     plugin(function ({ addVariant }) {
