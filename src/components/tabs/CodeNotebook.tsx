@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
+import readGithubFile from '../../helpers/readGithubFile';
+import CodeRenderer from '../CodeRenderer';
+
 enum LanguageCodeEnum {
   'Python',
   'R',
@@ -20,11 +23,30 @@ const tabs = [
     id: LanguageCodeEnum.Matlab,
   },
 ];
+const options = [
+  '/at621/meliora/blob/main/meliora/Accuracy_Ratio.py',
+  '/at621/meliora/blob/main/meliora/Bayesian_Error_Rate.py',
+  '/at621/meliora/blob/main/meliora/Binomial_test.py',
+  '/at621/meliora/blob/main/meliora/Loss_Capture_Ratio.py',
+  '/at621/meliora/blob/main/meliora/Somers_D.py',
+];
 
 const CodeNotebook = () => {
   const [activeMethodologyTab, setActiveMethodologyTab] = useState(
     LanguageCodeEnum.Python
   );
+  const [fileUrl, setFileUrl] = useState(options[0]);
+  const [fileText, setFileText] = useState('');
+  const [loadingFile, setLoadingFile] = useState(false);
+
+  useEffect(() => {
+    setLoadingFile(true);
+
+    readGithubFile(fileUrl).then(text => {
+      setFileText(text);
+      setLoadingFile(false);
+    });
+  }, [setFileText, fileUrl]);
 
   return (
     <div className="mt-8">
@@ -61,10 +83,18 @@ const CodeNotebook = () => {
 
       <div className="mt-3 ml-5 flex flex-col md:flex-row md:space-x-8">
         <div className="flex flex-row space-x-5 md:flex-col md:space-x-0 md:space-y-3">
-          <button className="whitespace-nowrap text-gray-700">Option 1</button>
-          <button className="whitespace-nowrap text-gray-300">Option 2</button>
-          <button className="whitespace-nowrap text-gray-700">Option 3</button>
-          <button className="whitespace-nowrap text-gray-700">Option 4</button>
+          {options.map((url, i) => (
+            <button
+              key={url}
+              className={cn(
+                'whitespace-nowrap',
+                fileUrl === url ? 'text-gray-300' : 'text-gray-700'
+              )}
+              onClick={() => setFileUrl(url)}
+            >
+              Option {i + 1}
+            </button>
+          ))}
         </div>
         <div className="mt-4 md:mt-0">
           <p className="max-w-[700px] font-medium text-gray-400">
@@ -73,8 +103,8 @@ const CodeNotebook = () => {
           </p>
 
           <div className="mt-5">
-            <code></code>
-            <p>FIle Here</p>
+            {fileText && <CodeRenderer codeString={fileText} />}
+            {loadingFile && <span>Loading file...</span>}
           </div>
 
           <div className="mt-2 flex items-center space-x-1 text-sm">
