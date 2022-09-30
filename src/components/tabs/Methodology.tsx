@@ -1,4 +1,11 @@
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import formatObjectByFieldToArray from '../../helpers/formatObjectByFieldToArray';
+import methodologicalOpinionsData from '../../data/methodological_opinions.json';
+
+const methodologies = formatObjectByFieldToArray(
+  methodologicalOpinionsData,
+  'Heading'
+);
 
 const Methodology = () => {
   return (
@@ -14,66 +21,19 @@ const Methodology = () => {
       </div>
 
       <div className="mt-8 space-y-5">
-        <div>
-          <h2 className="font-semibold text-sky-500">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          </h2>
-          <p className="mt-1.5 text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-            assumenda aperiam nesciunt officiis dolor quae ad! Voluptate
-            consequatur, quam totam maiores obcaecati impedit et repellendus
-            laborum vero eum, nisi sit. Impedit eos tempora voluptas placeat
-            consectetur similique provident? Quia numquam ipsam modi mollitia at
-            quasi delectus quae alias quaerat culpa?
-          </p>
+        {methodologies.map(({ Heading, Link, Text }, i) => (
+          <div key={i}>
+            <h2 className="font-semibold text-sky-500">{Heading}</h2>
+            <p className="mt-1.5 text-gray-500">{Text}</p>
 
-          <div className="mt-2 flex items-center space-x-1 text-sm italic">
-            <span className="text-gray-500">Open Article:</span>
-            <a href="https://facebook.com" className="text-violet-500">
-              https://facebook.com
-            </a>
+            <div className="mt-2 flex items-center space-x-1 text-sm italic">
+              <span className="text-gray-500">Open Article:</span>
+              <a href={Link} className="text-violet-500">
+                {Link}
+              </a>
+            </div>
           </div>
-        </div>
-        <div>
-          <h2 className="font-semibold text-sky-500">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          </h2>
-          <p className="mt-1.5 text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-            assumenda aperiam nesciunt officiis dolor quae ad! Voluptate
-            consequatur, quam totam maiores obcaecati impedit et repellendus
-            laborum vero eum, nisi sit. Impedit eos tempora voluptas placeat
-            consectetur similique provident? Quia numquam ipsam modi mollitia at
-            quasi delectus quae alias quaerat culpa?
-          </p>
-
-          <div className="mt-2 flex items-center space-x-1 text-sm italic">
-            <span className="text-gray-500">Open Article:</span>
-            <a href="https://facebook.com" className="text-violet-500">
-              https://facebook.com
-            </a>
-          </div>
-        </div>
-        <div>
-          <h2 className="font-semibold text-sky-500">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          </h2>
-          <p className="mt-1.5 text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-            assumenda aperiam nesciunt officiis dolor quae ad! Voluptate
-            consequatur, quam totam maiores obcaecati impedit et repellendus
-            laborum vero eum, nisi sit. Impedit eos tempora voluptas placeat
-            consectetur similique provident? Quia numquam ipsam modi mollitia at
-            quasi delectus quae alias quaerat culpa?
-          </p>
-
-          <div className="mt-2 flex items-center space-x-1 text-sm italic">
-            <span className="text-gray-500">Open Article:</span>
-            <a href="https://facebook.com" className="text-violet-500">
-              https://facebook.com
-            </a>
-          </div>
-        </div>
+        ))}
       </div>
 
       <div className="mx-auto mt-5 flex max-w-md items-center justify-between rounded-md bg-gray-100 px-6 py-2 text-cyan-400 lg:px-10">

@@ -1,47 +1,35 @@
+import formatObjectByFieldToArray from '../../helpers/formatObjectByFieldToArray';
+import referencesData from '../../data/references.json';
+import detailReferencesData from '../../data/detailed_references.json';
+
+const references = formatObjectByFieldToArray(referencesData, 'Heading');
+const detailedReferences = formatObjectByFieldToArray(
+  detailReferencesData,
+  'Reference'
+);
+
 const References = () => {
   return (
     <div className="mt-8 space-y-5">
-      <div>
-        <h2 className="font-semibold italic text-sky-500">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-        </h2>
-        <p className="mt-1.5 text-gray-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-          assumenda aperiam nesciunt officiis dolor quae ad! Voluptate
-          consequatur, quam totam maiores obcaecati impedit et repellendus
-          laborum vero eum, nisi sit. Impedit eos tempora voluptas placeat
-          consectetur similique provident? Quia numquam ipsam modi mollitia at
-          quasi delectus quae alias quaerat culpa?
-        </p>
+      {references.map(({ Heading, Text, ...obj }, i) => (
+        <div key={i}>
+          <h2 className="font-semibold italic text-sky-500">{Heading}</h2>
+          <p className="mt-1.5 text-gray-500">{Text}</p>
 
-        <div className="mt-2 flex items-center space-x-1 text-sm italic">
-          <span className="text-gray-500">Excel file:</span>
-          <a href="https://facebook.com" className="text-violet-500">
-            https://facebook.com
-          </a>
+          <div className="mt-2 flex items-center space-x-1 text-sm italic">
+            <span className="text-gray-500">
+              {obj['File reference'].split('\u00a0')[0]}
+            </span>
+            <a
+              href={obj['File reference'].split('\u00a0')[1]}
+              className="text-violet-500"
+            >
+              {obj['File reference'].split('\u00a0')[1]}
+            </a>
+          </div>
         </div>
-      </div>
+      ))}
 
-      <div>
-        <h2 className="font-semibold italic text-sky-500">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-        </h2>
-        <p className="mt-1.5 text-gray-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-          assumenda aperiam nesciunt officiis dolor quae ad! Voluptate
-          consequatur, quam totam maiores obcaecati impedit et repellendus
-          laborum vero eum, nisi sit. Impedit eos tempora voluptas placeat
-          consectetur similique provident? Quia numquam ipsam modi mollitia at
-          quasi delectus quae alias quaerat culpa?
-        </p>
-
-        <div className="mt-2 flex items-center space-x-1 text-sm italic">
-          <span className="text-gray-500">Excel file:</span>
-          <a href="https://facebook.com" className="text-violet-500">
-            https://facebook.com
-          </a>
-        </div>
-      </div>
       <div>
         <h2 className="font-semibold italic text-sky-500">
           Detailed references
@@ -64,46 +52,20 @@ const References = () => {
           </thead>
 
           <tbody>
-            <tr>
-              <td className="border border-gray-900 px-2 py-1 text-center">
-                1
-              </td>
-              <td className="border border-gray-900 px-5 py-1 text-center text-gray-500">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet,
-                voluptate obcaecati aliquid culpa assumenda sequi officiis quasi
-                commodi!
-              </td>
+            {detailedReferences.map(({ Reference, Sections }, i) => (
+              <tr key={i}>
+                <td className="border border-gray-900 px-2 py-1 text-center">
+                  {i + 1}
+                </td>
+                <td className="border border-gray-900 px-5 py-1 text-center text-gray-500">
+                  {Reference}
+                </td>
 
-              <td className="border border-gray-900 px-10 py-1 text-center text-gray-500">
-                Section 2.1
-              </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-900 px-2 py-1 text-center">
-                2
-              </td>
-              <td className="border border-gray-900 px-5 py-1 text-center text-gray-500">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet,
-                voluptate obcaecati aliquid culpa assumenda sequi officiis quasi
-                commodi!
-              </td>
-
-              <td className="border border-gray-900 px-10 py-1 text-center text-gray-500">
-                Section 2.1
-              </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-900 px-2 py-1 text-center">
-                -
-              </td>
-              <td className="border border-gray-900 px-5 py-1 text-center text-gray-500">
-                -
-              </td>
-
-              <td className="border border-gray-900 px-10 py-1 text-center text-gray-500">
-                -
-              </td>
-            </tr>
+                <td className="border border-gray-900 px-10 py-1 text-center text-gray-500">
+                  {Sections}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

@@ -72,8 +72,8 @@ function App() {
         </div>
 
         <div className="flex flex-wrap gap-3 lg:gap-5">
-          <select name="risk" className="flex-1 py-2 px-3">
-            <option disabled selected>
+          <select name="risk" className="flex-1 py-2 px-3" defaultValue="">
+            <option value="" disabled>
               Select Risk Category
             </option>
             <option value="risk quantification">risk quantification</option>
@@ -84,8 +84,8 @@ function App() {
               Margin of Conservatism
             </option>
           </select>
-          <select name="risk" className="flex-1 py-2 px-3">
-            <option disabled selected>
+          <select name="risk" className="flex-1 py-2 px-3" defaultValue="">
+            <option value="" disabled>
               Select Topic
             </option>
             <option value="methodology">methodology</option>
