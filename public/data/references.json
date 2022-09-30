@@ -1,0 +1,14 @@
+{
+  "Heading": {
+    "0": "LGD modelling requirements based on the EBA requirements",
+    "1": "PD modelling requirements based on the EBA requirements"
+  },
+  "Text": {
+    "0": "This checklist aggregates main requirements for the LGD modelling and validation using the EBA requirements. This selection is based on choices that may not be applicable to your use case and should be treated accordingly.",
+    "1": "This checklist aggregates main requirements for the PD modelling and validation using the EBA requirements. This selection is based on choices that may not be applicable to your use case and should be treated accordingly."
+  },
+  "File reference": {
+    "0": "Excel file:\u00a0https://www.meliora.org/assets/lgd_checklist.xlsx",
+    "1": "Excel file:\u00a0https://www.meliora.org/assets/pd_checklist.xlsx"
+  }
+}

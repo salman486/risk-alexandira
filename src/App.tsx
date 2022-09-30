@@ -1,11 +1,26 @@
 import { BsSearch } from 'react-icons/bs';
+import cn from 'classnames';
 import { GrFormClose } from 'react-icons/gr';
 import { AiOutlineSetting } from 'react-icons/ai';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import FaceFrownIcon from './icons/face-frown';
 import FaceHappyIcon from './icons/face-happy';
+import Methodology from './components/tabs/Methodology';
+import FooterNav from './components/FooterNav';
+import References from './components/tabs/References';
+import CodeNotebook from './components/tabs/CodeNotebook';
+import Data from './components/tabs/Data';
+import { useState } from 'react';
+
+enum TabEnum {
+  'References',
+  'Methodology',
+  'CodeNotebook',
+  'Data',
+}
 
 function App() {
+  const [activeTab, setActiveTab] = useState(TabEnum.Methodology);
+
   return (
     <div className="container pb-20">
       <header className="flex flex-col justify-between space-y-3 pt-2 md:flex-row md:items-end md:space-y-0">
@@ -61,15 +76,22 @@ function App() {
             <option disabled selected>
               Select Risk Category
             </option>
-            <option value="1">1</option>
-            <option value="2">2</option>
+            <option value="risk quantification">risk quantification</option>
+            <option value="risk calibration">risk calibration</option>
+            <option value="Corporate PD">Corporate PD</option>
+            <option value="Corporate LGD">Corporate LGD</option>
+            <option value="Margin of Conservatism">
+              Margin of Conservatism
+            </option>
           </select>
           <select name="risk" className="flex-1 py-2 px-3">
             <option disabled selected>
               Select Topic
             </option>
-            <option value="1">1</option>
-            <option value="2">2</option>
+            <option value="methodology">methodology</option>
+            <option value="coding">coding</option>
+            <option value="benchmarking">benchmarking</option>
+            <option value="data">data</option>
           </select>
           <button className="flex-1 rounded bg-gray-900 py-2 px-14 text-lg font-medium text-white md:flex-grow-0">
             Search
@@ -78,30 +100,72 @@ function App() {
       </div>
 
       <div className="mt-3 flex flex-wrap gap-3 lg:gap-5">
-        <div className="flex flex-1 items-center justify-between space-x-2 rounded bg-blue-300/40 py-2 px-5">
-          <span className="text-blue-700">Methodology</span>
+        <button
+          onClick={() => setActiveTab(TabEnum.Methodology)}
+          className="flex flex-1 items-center justify-between space-x-2 rounded bg-blue-300/40 py-2 px-5"
+        >
+          <span
+            className={cn(
+              activeTab === TabEnum.Methodology
+                ? 'text-blue-700'
+                : 'text-gray-700'
+            )}
+          >
+            Methodology
+          </span>
           <span className="rounded bg-gray-900 py-1 px-2 font-medium text-white">
             14
           </span>
-        </div>
-        <div className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5">
-          <span className="text-gray-700">Code and notebooks</span>
+        </button>
+        <button
+          onClick={() => setActiveTab(TabEnum.CodeNotebook)}
+          className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5"
+        >
+          <span
+            className={cn(
+              activeTab === TabEnum.CodeNotebook
+                ? 'text-blue-700'
+                : 'text-gray-700'
+            )}
+          >
+            Code and notebooks
+          </span>
           <span className="rounded bg-gray-900 py-1 px-2 font-medium text-white">
             14
           </span>
-        </div>
-        <div className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5">
-          <span className="text-gray-700">Regulatory References</span>
+        </button>
+        <button
+          onClick={() => setActiveTab(TabEnum.References)}
+          className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5"
+        >
+          <span
+            className={cn(
+              activeTab === TabEnum.References
+                ? 'text-blue-700'
+                : 'text-gray-700'
+            )}
+          >
+            Regulatory References
+          </span>
           <span className="rounded bg-gray-900 py-1 px-2 font-medium text-white">
             14
           </span>
-        </div>
-        <div className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5">
-          <span className="text-gray-700">Data</span>
+        </button>
+        <button
+          onClick={() => setActiveTab(TabEnum.Data)}
+          className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5"
+        >
+          <span
+            className={cn(
+              activeTab === TabEnum.Data ? 'text-blue-700' : 'text-gray-700'
+            )}
+          >
+            Data
+          </span>
           <span className="rounded bg-gray-900 py-1 px-2 font-medium text-white">
             14
           </span>
-        </div>
+        </button>
       </div>
 
       <div className="relative mt-8 flex flex-col justify-between space-y-2 rounded-lg border border-gray-300 p-2 pl-5 md:flex-row md:items-center md:space-y-0">
@@ -113,112 +177,35 @@ function App() {
           <span className="font-medium">calibration</span>
         </p>
         <div className="flex items-center space-x-3">
-          <button className="rounded-lg bg-gray-200 px-5 py-1.5">Accept</button>
-          <button className="rounded-lg bg-gray-200 px-5 py-1.5">Reject</button>
+          <button className="rounded-lg bg-gray-200 px-5 py-1.5 text-gray-700">
+            Accept
+          </button>
+          <button className="rounded-lg bg-gray-200 px-5 py-1.5 text-gray-700">
+            Reject
+          </button>
         </div>
       </div>
 
-      <div className="mt-5 px-5 lg:px-8">
-        <div className="relative flex font-medium text-gray-500">
-          <span className="absolute bottom-0 z-[-4] h-0.5 w-full bg-gray-200"></span>
-          <button className="mx-3 cursor-pointer border-b-2 border-red-400 px-2 pb-1.5">
-            Methodological opinions
-          </button>
-          <button className="mx-3 cursor-pointer border-b-2 border-transparent px-2 pb-1.5">
-            Regulatory benchmarking
-          </button>
-        </div>
+      {renderTab(activeTab)}
 
-        <div className="mt-8 space-y-5">
-          <div>
-            <h2 className="font-medium text-sky-500">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            </h2>
-            <p className="mt-1.5 text-gray-500">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-              assumenda aperiam nesciunt officiis dolor quae ad! Voluptate
-              consequatur, quam totam maiores obcaecati impedit et repellendus
-              laborum vero eum, nisi sit. Impedit eos tempora voluptas placeat
-              consectetur similique provident? Quia numquam ipsam modi mollitia
-              at quasi delectus quae alias quaerat culpa?
-            </p>
-
-            <div className="mt-2 flex items-center space-x-1 text-sm italic">
-              <span className="text-gray-500">Open Article:</span>
-              <a href="https://facebook.com" className="text-violet-500">
-                https://facebook.com
-              </a>
-            </div>
-          </div>
-          <div>
-            <h2 className="font-medium text-sky-500">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            </h2>
-            <p className="mt-1.5 text-gray-500">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-              assumenda aperiam nesciunt officiis dolor quae ad! Voluptate
-              consequatur, quam totam maiores obcaecati impedit et repellendus
-              laborum vero eum, nisi sit. Impedit eos tempora voluptas placeat
-              consectetur similique provident? Quia numquam ipsam modi mollitia
-              at quasi delectus quae alias quaerat culpa?
-            </p>
-
-            <div className="mt-2 flex items-center space-x-1 text-sm italic">
-              <span className="text-gray-500">Open Article:</span>
-              <a href="https://facebook.com" className="text-violet-500">
-                https://facebook.com
-              </a>
-            </div>
-          </div>
-          <div>
-            <h2 className="font-medium text-sky-500">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            </h2>
-            <p className="mt-1.5 text-gray-500">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-              assumenda aperiam nesciunt officiis dolor quae ad! Voluptate
-              consequatur, quam totam maiores obcaecati impedit et repellendus
-              laborum vero eum, nisi sit. Impedit eos tempora voluptas placeat
-              consectetur similique provident? Quia numquam ipsam modi mollitia
-              at quasi delectus quae alias quaerat culpa?
-            </p>
-
-            <div className="mt-2 flex items-center space-x-1 text-sm italic">
-              <span className="text-gray-500">Open Article:</span>
-              <a href="https://facebook.com" className="text-violet-500">
-                https://facebook.com
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="mx-auto mt-5 flex max-w-md items-center justify-between rounded-md bg-gray-100 px-6 py-2 text-cyan-400 lg:px-10">
-          <FaChevronLeft />
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>4</button>
-          <button>5</button>
-          <FaChevronRight />
-        </div>
-
-        <div className="mt-7 flex items-center justify-center divide-x-[1px] divide-blue-600 text-sm text-blue-600">
-          <div className="px-4 lg:px-14">
-            <a href="/#">Home</a>
-          </div>
-          <div className="px-4 lg:px-14">
-            <a href="/#">Contact</a>
-          </div>
-          <div className="px-4 lg:px-14">
-            <a href="/#">Privacy</a>
-          </div>
-          <div className="px-4 lg:px-14">
-            <a href="/#">Terms of use</a>
-          </div>
-        </div>
-      </div>
+      <FooterNav />
     </div>
   );
 }
 
 export default App;
+
+const renderTab = (tab: TabEnum) => {
+  switch (tab) {
+    case TabEnum.Methodology:
+      return <Methodology />;
+    case TabEnum.References:
+      return <References />;
+    case TabEnum.CodeNotebook:
+      return <CodeNotebook />;
+    case TabEnum.Data:
+      return <Data />;
+    default:
+      return null;
+  }
+};
