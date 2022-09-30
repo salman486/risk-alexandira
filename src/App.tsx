@@ -1,5 +1,4 @@
 import { BsSearch } from 'react-icons/bs';
-import cn from 'classnames';
 import { GrFormClose } from 'react-icons/gr';
 import { AiOutlineSetting } from 'react-icons/ai';
 import FaceFrownIcon from './icons/face-frown';
@@ -9,17 +8,24 @@ import FooterNav from './components/FooterNav';
 import References from './components/tabs/References';
 import CodeNotebook from './components/tabs/CodeNotebook';
 import Data from './components/tabs/Data';
-import { useState } from 'react';
-
-enum TabEnum {
-  'References',
-  'Methodology',
-  'CodeNotebook',
-  'Data',
-}
+import {
+  DataContextProvider,
+  IDataContext,
+  TabEnum,
+  useData,
+} from './context/data';
+import Tabs from './components/tabs/Tabs';
 
 function App() {
-  const [activeTab, setActiveTab] = useState(TabEnum.Methodology);
+  const {
+    searchTerm,
+    setSearchTerm,
+    suggestTermHandler,
+    suggestedSearch,
+    data,
+    onSearch,
+    activeTab,
+  } = useData() as IDataContext;
 
   return (
     <div className="container pb-20">
@@ -57,12 +63,14 @@ function App() {
         <div className="relative">
           <BsSearch className="absolute top-1/2 left-4 w-5 -translate-y-1/2 text-gray-500" />
           <input
+            onChange={e => setSearchTerm(e.target.value || '')}
+            value={searchTerm}
             type="text"
             className="w-full p-2 pl-11"
             placeholder="Search..."
           />
           <div className="absolute right-2 top-1/2 flex -translate-y-1/2 space-x-2">
-            <button type="button">
+            <button type="button" onClick={() => setSearchTerm('')}>
               <GrFormClose className="h-7 w-7 font-bold every-child:stroke-cyan-500 every-child:stroke-[3px]" />
             </button>
             <button type="button">
@@ -93,107 +101,66 @@ function App() {
             <option value="benchmarking">benchmarking</option>
             <option value="data">data</option>
           </select>
-          <button className="flex-1 rounded bg-gray-900 py-2 px-14 text-lg font-medium text-white md:flex-grow-0">
+          <button
+            onClick={onSearch}
+            className="flex-1 rounded bg-gray-900 py-2 px-14 text-lg font-medium text-white md:flex-grow-0"
+          >
             Search
           </button>
         </div>
       </div>
 
-      <div className="mt-3 flex flex-wrap gap-3 lg:gap-5">
-        <button
-          onClick={() => setActiveTab(TabEnum.Methodology)}
-          className="flex flex-1 items-center justify-between space-x-2 rounded bg-blue-300/40 py-2 px-5"
-        >
-          <span
-            className={cn(
-              activeTab === TabEnum.Methodology
-                ? 'text-blue-700'
-                : 'text-gray-700'
-            )}
-          >
-            Methodology
-          </span>
-          <span className="rounded bg-gray-900 py-1 px-2 font-medium text-white">
-            14
-          </span>
-        </button>
-        <button
-          onClick={() => setActiveTab(TabEnum.CodeNotebook)}
-          className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5"
-        >
-          <span
-            className={cn(
-              activeTab === TabEnum.CodeNotebook
-                ? 'text-blue-700'
-                : 'text-gray-700'
-            )}
-          >
-            Code and notebooks
-          </span>
-          <span className="rounded bg-gray-900 py-1 px-2 font-medium text-white">
-            14
-          </span>
-        </button>
-        <button
-          onClick={() => setActiveTab(TabEnum.References)}
-          className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5"
-        >
-          <span
-            className={cn(
-              activeTab === TabEnum.References
-                ? 'text-blue-700'
-                : 'text-gray-700'
-            )}
-          >
-            Regulatory References
-          </span>
-          <span className="rounded bg-gray-900 py-1 px-2 font-medium text-white">
-            14
-          </span>
-        </button>
-        <button
-          onClick={() => setActiveTab(TabEnum.Data)}
-          className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5"
-        >
-          <span
-            className={cn(
-              activeTab === TabEnum.Data ? 'text-blue-700' : 'text-gray-700'
-            )}
-          >
-            Data
-          </span>
-          <span className="rounded bg-gray-900 py-1 px-2 font-medium text-white">
-            14
-          </span>
-        </button>
-      </div>
+      {data && <Tabs />}
 
-      <div className="relative mt-8 flex flex-col justify-between space-y-2 rounded-lg border border-gray-300 p-2 pl-5 md:flex-row md:items-center md:space-y-0">
-        <span className="absolute top-0 left-3 -translate-y-1/2 bg-white px-2 text-sm font-medium text-gray-500">
-          Input Interpretation
-        </span>
-        <p className="text-sm text-gray-700">
-          Showing result for: Corporate PD model{' '}
-          <span className="font-medium">calibration</span>
-        </p>
-        <div className="flex items-center space-x-3">
-          <button className="rounded-lg bg-gray-200 px-5 py-1.5 text-gray-700">
-            Accept
-          </button>
-          <button className="rounded-lg bg-gray-200 px-5 py-1.5 text-gray-700">
-            Reject
-          </button>
+      {suggestedSearch && (
+        <div className="relative mt-8 flex flex-col justify-between space-y-2 rounded-lg border border-gray-300 p-2 pl-5 md:flex-row md:items-center md:space-y-0">
+          <span className="absolute top-0 left-3 -translate-y-1/2 bg-white px-2 text-sm font-medium text-gray-500">
+            Input Interpretation
+          </span>
+          <p className="text-sm text-gray-700">
+            Showing result for: {suggestedSearch}
+          </p>
+          <div className="flex items-center space-x-3">
+            <button
+              className="rounded-lg bg-gray-200 px-5 py-1.5 text-gray-700"
+              onClick={() => suggestTermHandler(true)}
+            >
+              Accept
+            </button>
+            <button
+              className="rounded-lg bg-gray-200 px-5 py-1.5 text-gray-700"
+              onClick={() => suggestTermHandler(false)}
+            >
+              Reject
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
-      {renderTab(activeTab)}
+      <div className="min-h-[400px]">
+        {data ? (
+          renderTab(activeTab)
+        ) : (
+          <span className="mt-20 block text-center font-medium">
+            Please Search to Get Data
+          </span>
+        )}
+      </div>
 
       <FooterNav />
     </div>
   );
 }
 
-export default App;
+const AppWrapper = () => {
+  return (
+    <DataContextProvider>
+      <App />
+    </DataContextProvider>
+  );
+};
+
+export default AppWrapper;
 
 const renderTab = (tab: TabEnum) => {
   switch (tab) {

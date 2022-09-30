@@ -1,4 +1,31 @@
+import { useState } from 'react';
+import cn from 'classnames';
+enum LanguageCodeEnum {
+  'Python',
+  'R',
+  'Matlab',
+}
+
+const tabs = [
+  {
+    name: 'Python',
+    id: LanguageCodeEnum.Python,
+  },
+  {
+    name: 'R',
+    id: LanguageCodeEnum.R,
+  },
+  {
+    name: 'Matlab',
+    id: LanguageCodeEnum.Matlab,
+  },
+];
+
 const CodeNotebook = () => {
+  const [activeMethodologyTab, setActiveMethodologyTab] = useState(
+    LanguageCodeEnum.Python
+  );
+
   return (
     <div className="mt-8">
       <div className="relative flex items-start justify-between overflow-auto pb-3 font-medium text-gray-500">
@@ -6,15 +33,20 @@ const CodeNotebook = () => {
         <span className="absolute bottom-3 z-[-4] h-0.5 w-full bg-gray-200"></span>
 
         <div className="flex">
-          <button className="mx-3 min-w-[100px] cursor-pointer border-b-2 border-red-400 px-2 pb-1.5">
-            Python
-          </button>
-          <button className="mx-3 min-w-[100px] cursor-pointer border-b-2 border-transparent px-2 pb-1.5">
-            R
-          </button>
-          <button className="mx-3 min-w-[100px] cursor-pointer border-b-2 border-transparent px-2 pb-1.5">
-            Matlab
-          </button>
+          {tabs.map(({ name, id }) => (
+            <button
+              key={id}
+              onClick={() => setActiveMethodologyTab(id)}
+              className={cn(
+                'mx-3 min-w-[100px] cursor-pointer border-b-2 px-2 pb-1.5',
+                activeMethodologyTab === id
+                  ? 'border-red-400'
+                  : 'border-transparent'
+              )}
+            >
+              {name}
+            </button>
+          ))}
         </div>
 
         <div className="flex items-center space-x-3">

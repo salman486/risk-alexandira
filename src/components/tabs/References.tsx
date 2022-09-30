@@ -1,30 +1,26 @@
-import formatObjectByFieldToArray from '../../helpers/formatObjectByFieldToArray';
-import referencesData from '../../data/references.json';
-import detailReferencesData from '../../data/detailed_references.json';
-
-const references = formatObjectByFieldToArray(referencesData, 'Heading');
-const detailedReferences = formatObjectByFieldToArray(
-  detailReferencesData,
-  'Reference'
-);
+import { useData } from '../../context/data';
 
 const References = () => {
+  const { data } = useData();
+
   return (
     <div className="mt-8 space-y-5">
-      {references.map(({ Heading, Text, ...obj }, i) => (
+      {data?.references.map((reference, i) => (
         <div key={i}>
-          <h2 className="font-semibold italic text-sky-500">{Heading}</h2>
-          <p className="mt-1.5 text-gray-500">{Text}</p>
+          <h2 className="font-semibold italic text-sky-500">
+            {reference.Heading}
+          </h2>
+          <p className="mt-1.5 text-gray-500">{reference.Text}</p>
 
           <div className="mt-2 flex items-center space-x-1 text-sm italic">
             <span className="text-gray-500">
-              {obj['File reference'].split('\u00a0')[0]}
+              {reference['File reference'].split('\u00a0')[0]}
             </span>
             <a
-              href={obj['File reference'].split('\u00a0')[1]}
+              href={reference['File reference'].split('\u00a0')[1]}
               className="text-violet-500"
             >
-              {obj['File reference'].split('\u00a0')[1]}
+              {reference['File reference'].split('\u00a0')[1]}
             </a>
           </div>
         </div>
@@ -52,7 +48,7 @@ const References = () => {
           </thead>
 
           <tbody>
-            {detailedReferences.map(({ Reference, Sections }, i) => (
+            {data?.detailedReferences.map(({ Reference, Sections }, i) => (
               <tr key={i}>
                 <td className="border border-gray-900 px-2 py-1 text-center">
                   {i + 1}

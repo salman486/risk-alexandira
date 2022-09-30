@@ -1,27 +1,52 @@
+import { useState } from 'react';
+import cn from 'classnames';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import formatObjectByFieldToArray from '../../helpers/formatObjectByFieldToArray';
-import methodologicalOpinionsData from '../../data/methodological_opinions.json';
+import { useData } from '../../context/data';
 
-const methodologies = formatObjectByFieldToArray(
-  methodologicalOpinionsData,
-  'Heading'
-);
+enum MethodologyEnum {
+  'opinions',
+  'benchmarking',
+}
+
+const tabs = [
+  {
+    name: 'Methodological opinions',
+    id: MethodologyEnum.opinions,
+  },
+  {
+    name: 'Regulatory benchmarking',
+    id: MethodologyEnum.benchmarking,
+  },
+];
 
 const Methodology = () => {
+  const [activeMethodologyTab, setActiveMethodologyTab] = useState(
+    MethodologyEnum.opinions
+  );
+  const { data } = useData();
+
   return (
     <div className="mt-5 px-5 lg:px-8">
       <div className="relative flex font-medium text-gray-500">
         <span className="absolute bottom-0 z-[-4] h-0.5 w-full bg-gray-200"></span>
-        <button className="mx-3 cursor-pointer border-b-2 border-red-400 px-2 pb-1.5">
-          Methodological opinions
-        </button>
-        <button className="mx-3 cursor-pointer border-b-2 border-transparent px-2 pb-1.5">
-          Regulatory benchmarking
-        </button>
+        {tabs.map(({ name, id }) => (
+          <button
+            key={id}
+            onClick={() => setActiveMethodologyTab(id)}
+            className={cn(
+              'mx-3 cursor-pointer border-b-2 px-2 pb-1.5',
+              activeMethodologyTab === id
+                ? 'border-red-400'
+                : 'border-transparent'
+            )}
+          >
+            {name}
+          </button>
+        ))}
       </div>
 
       <div className="mt-8 space-y-5">
-        {methodologies.map(({ Heading, Link, Text }, i) => (
+        {data?.methodologies.map(({ Heading, Link, Text }, i) => (
           <div key={i}>
             <h2 className="font-semibold text-sky-500">{Heading}</h2>
             <p className="mt-1.5 text-gray-500">{Text}</p>
