@@ -6,7 +6,7 @@ const Tabs = () => {
   const { activeTab, setActiveTab, data } = useData() as IDataContext;
 
   return (
-    <div className="mt-3 flex flex-wrap gap-3 lg:gap-5">
+    <div className="mx-5 mt-3 flex flex-wrap gap-3 lg:gap-5">
       <button
         onClick={() => setActiveTab(TabEnum.Methodology)}
         className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5 md:flex-initial md:justify-start md:space-x-5"

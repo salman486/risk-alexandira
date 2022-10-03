@@ -143,7 +143,7 @@ function App() {
         </div>
       )}
 
-      <div className="min-h-[400px]">
+      <div className="min-h-[400px] px-5">
         {data ? (
           renderTab(activeTab)
         ) : (

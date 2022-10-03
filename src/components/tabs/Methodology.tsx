@@ -43,7 +43,7 @@ const Methodology = () => {
   }, [itemOffset, data]);
 
   return (
-    <div className="mt-5 px-5 lg:px-8">
+    <div className="mt-5">
       <div className="relative inline-flex font-medium text-gray-500">
         <span className="absolute bottom-0 z-[-4] h-0.5 w-full bg-gray-200"></span>
         {tabs.map(({ name, id }) => (
