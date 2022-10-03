@@ -9,7 +9,7 @@ const Tabs = () => {
     <div className="mt-3 flex flex-wrap gap-3 lg:gap-5">
       <button
         onClick={() => setActiveTab(TabEnum.Methodology)}
-        className="flex flex-1 items-center justify-between space-x-2 rounded bg-blue-300/40 py-2 px-5"
+        className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5 md:flex-initial md:justify-start md:space-x-5"
       >
         <span
           className={cn(
@@ -26,7 +26,7 @@ const Tabs = () => {
       </button>
       <button
         onClick={() => setActiveTab(TabEnum.CodeNotebook)}
-        className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5"
+        className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5 md:flex-initial md:justify-start md:space-x-5"
       >
         <span
           className={cn(
@@ -43,7 +43,7 @@ const Tabs = () => {
       </button>
       <button
         onClick={() => setActiveTab(TabEnum.References)}
-        className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5"
+        className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5 md:flex-initial md:justify-start md:space-x-5"
       >
         <span
           className={cn(
@@ -58,7 +58,7 @@ const Tabs = () => {
       </button>
       <button
         onClick={() => setActiveTab(TabEnum.Data)}
-        className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5"
+        className="flex flex-1 items-center justify-between space-x-2 whitespace-nowrap rounded bg-blue-300/40 py-2 px-5 md:flex-initial md:justify-start md:space-x-5"
       >
         <span
           className={cn(
