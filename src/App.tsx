@@ -27,6 +27,12 @@ function App() {
     activeTab,
   } = useData() as IDataContext;
 
+  const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (searchTerm) onSearch();
+  };
+
   return (
     <div className="container pb-20">
       <header className="flex flex-col justify-between space-y-3 pt-2 md:flex-row md:items-end md:space-y-0">
@@ -59,7 +65,7 @@ function App() {
         </div>
       </header>
 
-      <div className="mt-5 space-y-5 bg-gray-100 p-5">
+      <form className="mt-5 space-y-5 bg-gray-100 p-5" onSubmit={searchHandler}>
         <div className="relative">
           <BsSearch className="absolute top-1/2 left-4 w-5 -translate-y-1/2 text-gray-500" />
           <input
@@ -102,13 +108,13 @@ function App() {
             <option value="data">data</option>
           </select>
           <button
-            onClick={onSearch}
             className="flex-1 rounded bg-gray-900 py-2 px-14 text-lg font-medium text-white md:flex-grow-0"
+            type="submit"
           >
             Search
           </button>
         </div>
-      </div>
+      </form>
 
       {data && <Tabs />}
 
